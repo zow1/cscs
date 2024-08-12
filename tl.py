@@ -9,7 +9,7 @@ import pytz
 china_tz = pytz.timezone('Asia/Shanghai')
 
 # 定义一个函数来启动FFmpeg进程
-def start_ffmpeg(input_url, output_url, processes, retry_count=3):
+def start_ffmpeg(input_url, output_url, processes, retry_count=10):
     ffmpeg_command = [
         'ffmpeg',
         '-re',
@@ -34,7 +34,7 @@ def start_ffmpeg(input_url, output_url, processes, retry_count=3):
                 line = process.stderr.readline().decode('utf-8').strip()
                 if not line:
                     break
-                print(line)
+                #print(line)
                 if "Error opening input file" in line or "Conversion failed!" in line:
                     raise Exception("FFmpeg error detected")
             process.wait()
