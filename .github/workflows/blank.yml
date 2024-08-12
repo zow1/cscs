@@ -2,7 +2,7 @@ name: tl
 
 on:
   schedule:
-    - cron: '*/2 * * * *' # 每2分钟触发一次
+    - cron: '*/5 * * * *' # 每5分钟触发一次
   workflow_dispatch:
   push:
     branches:
