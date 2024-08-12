@@ -35,11 +35,16 @@ def start_ffmpeg(input_url, output_url, processes, retry_count=10):
                 if not line:
                     break
                 #print(line)
-                if "Error opening input file" in line or "Conversion failed!" in line:
+                if "Error" in line or "failed" in line or "404 Not Found" in line or "403 Forbidden" in line:
                     raise Exception("FFmpeg error detected")
             process.wait()
             break  # 如果成功，跳出循环
         except Exception as e:
+            # 停止当前有错误的进程
+            if process.poll() is None:  # 检查进程是否仍在运行
+                process.terminate()  # 终止进程
+                process.wait()  # 等待进程完全结束
+
             retry_count -= 1
             if retry_count == 0:
                 print(f"An error occurred while streaming {input_url}: {e}. All retry attempts failed.")
