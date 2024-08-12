@@ -1,13 +1,16 @@
 name: tl
 
 on:
-  #schedule:
-  #  - cron: '0 3,9,15,21 * * *'
+  schedule:
+    - cron: '*/2 * * * *' # 每2分钟触发一次
   workflow_dispatch:
   push:
     branches:
       - main
-      
+
+concurrency:
+  group: "tl-workflow"
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -33,15 +36,6 @@ jobs:
       - name: Run itv_all
         run: python ${{ github.workspace }}/tl.py
 
-      #- name: Run cctv
-        #run: python ${{ github.workspace }}/cctv.py
-        
-      #- name: Run weishi
-        #run: python ${{ github.workspace }}/weishi.py
-        
-      #- name: Run qita
-        #run: python ${{ github.workspace }}/qita.py
-        
       - name: 提交更改
         run: |
           git config --local user.email "191049659@qq.com"
