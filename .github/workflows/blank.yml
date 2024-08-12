@@ -23,7 +23,7 @@ jobs:
           python-version: 3.x
 
       - name: Install dependencies
-        run: pip install selenium requests futures eventlet pytz subprocess threading
+        run: pip install selenium requests futures eventlet pytz threading time re
 
       - name: Install FFmpeg
         run: |
