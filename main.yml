@@ -10,7 +10,7 @@ on:
 
 # 在新工作流实例开始之前，自动取消任何正在运行的实例
 concurrency:
-  group: "tl-workflow"
+  group: "tl"
   cancel-in-progress: true 
 
 jobs:
