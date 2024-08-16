@@ -71,8 +71,8 @@ def get_streams(url):
 # 启动推流线程
 def start_streaming_threads(streams, processes):
     threads = []
-    for input_url, output_url in streams:
-        print(f"开始 channel: {channel_name}")
+    for input_url, output_url, channel_name in streams:
+        print(f"Starting stream for channel: {channel_name}")
         thread = threading.Thread(target=start_ffmpeg, args=(input_url, output_url, processes))
         thread.start()
         threads.append(thread)
