@@ -64,9 +64,23 @@ def get_streams(url):
             line, comment = line.split('#', 1)
         else:
             comment = "Unknown Channel"  # 如果没有注释，使用默认名称
-        input_url, output_url = line.split(',')
+
+        # 去除空白字符
+        line = line.strip()
+        if not line:
+            continue  # 如果是空行，跳过
+
+        # 解析输入流和输出流
+        parts = line.split(',')
+        if len(parts) != 2:
+            print(f"Skipping malformed line: {line}")
+            continue  # 如果行格式不正确，跳过
+
+        input_url, output_url = parts
         streams.append((input_url.strip(), output_url.strip(), comment.strip()))
+
     return streams
+
 
 # 启动推流线程
 def start_streaming_threads(streams, processes):
