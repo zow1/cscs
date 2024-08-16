@@ -9,7 +9,8 @@ import pytz
 china_tz = pytz.timezone('Asia/Shanghai')
 
 # 定义一个函数来启动FFmpeg进程
-def start_ffmpeg(input_url, output_url, processes, retry_count=10):
+def start_ffmpeg(input_url, output_url, comment, processes, retry_count=10):
+
     ffmpeg_command = [
         'ffmpeg',
         '-re',
@@ -88,7 +89,7 @@ def start_streaming_threads(streams, processes):
     threads = []
     for input_url, output_url, channel_name in streams:
         print(f"Starting stream for channel: {channel_name}", flush=True)
-        thread = threading.Thread(target=start_ffmpeg, args=(input_url, output_url, processes))
+        thread = threading.Thread(target=start_ffmpeg, args=(input_url, output_url, channel_name, processes))
         thread.start()
         threads.append(thread)
     return threads
