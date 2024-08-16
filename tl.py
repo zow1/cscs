@@ -47,9 +47,9 @@ def start_ffmpeg(input_url, output_url, processes, retry_count=10):
 
             retry_count -= 1
             if retry_count == 0:
-                print(f"An error occurred while streaming {input_url}: {e}. All retry attempts failed.")
+                print(f"An error occurred while streaming {comment} {input_url}: {e}. All retry attempts failed.")
             else:
-                print(f"An error occurred while streaming {input_url}: {e}. Retrying... ({retry_count} attempts left)")
+                print(f"An error occurred while streaming {comment} {input_url}: {e}. Retrying... ({retry_count} attempts left)")
                 time.sleep(1)  # 等待1秒后重试
 
 
