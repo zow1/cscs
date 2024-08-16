@@ -56,6 +56,7 @@ def start_ffmpeg(input_url, output_url, processes, retry_count=10):
 # 从指定URL读取输入流和推流地址
 def get_streams(url):
     response = requests.get(url)
+    response.encoding = 'utf-8'  # 强制将编码设置为 UTF-8
     lines = response.text.strip().splitlines()
     streams = []
     for line in lines:
@@ -73,7 +74,7 @@ def get_streams(url):
         # 解析输入流和输出流
         parts = line.split(',')
         if len(parts) != 2:
-            print(f"Skipping malformed line: {line}")
+            print(f"Skipping malformed line: {comment.strip()}")
             continue  # 如果行格式不正确，跳过
 
         input_url, output_url = parts
