@@ -59,22 +59,20 @@ def get_streams(url):
     lines = response.text.strip().splitlines()
     streams = []
     for line in lines:
-        line = line.split('//')[0].strip()  # 忽略注释部分
-        if ',' in line:  # 检查行中是否包含逗号
-            parts = line.split(',')
-            if len(parts) == 2:  # 确保分隔后得到两部分
-                input_url, output_url = parts
-                streams.append((input_url.strip(), output_url.strip()))
-            else:
-                print(f"Skipping invalid line (missing URL): {line}")
+        # 去除行尾的注释部分
+        if '#' in line:
+            line, comment = line.split('#', 1)
         else:
-            print(f"Skipping invalid line (no comma found): {line}")
+            comment = "Unknown Channel"  # 如果没有注释，使用默认名称
+        input_url, output_url = line.split(',')
+        streams.append((input_url.strip(), output_url.strip(), comment.strip()))
     return streams
 
 # 启动推流线程
 def start_streaming_threads(streams, processes):
     threads = []
     for input_url, output_url in streams:
+        print(f"开始 channel: {channel_name}")
         thread = threading.Thread(target=start_ffmpeg, args=(input_url, output_url, processes))
         thread.start()
         threads.append(thread)
