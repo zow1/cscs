@@ -87,7 +87,7 @@ def get_streams(url):
 def start_streaming_threads(streams, processes):
     threads = []
     for input_url, output_url, channel_name in streams:
-        print(f"Starting stream for channel: {channel_name}")
+        print(f"Starting stream for channel: {channel_name}", flush=True)
         thread = threading.Thread(target=start_ffmpeg, args=(input_url, output_url, processes))
         thread.start()
         threads.append(thread)
@@ -121,7 +121,7 @@ def main(url):
         # 等待直到下一个整点
         next_hour = get_next_hour()
         time_to_wait = (next_hour - now).total_seconds()
-        print(f"Waiting until {next_hour.strftime('%H:%M:%S CST')} to update streams...")
+        print(f"Waiting until {next_hour.strftime('%H:%M:%S CST')} to update streams...", flush=True)
         time.sleep(time_to_wait)
 
         # 停止当前的推流进程
