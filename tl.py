@@ -59,6 +59,7 @@ def get_streams(url):
     lines = response.text.strip().splitlines()
     streams = []
     for line in lines:
+        line = line.split('//')[0].strip()  # 忽略注释部分
         input_url, output_url = line.split(',')
         streams.append((input_url.strip(), output_url.strip()))
     return streams
