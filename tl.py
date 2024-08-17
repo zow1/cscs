@@ -47,10 +47,11 @@ def start_ffmpeg(input_url, output_url, comment, processes, retry_count=10):
                 process.wait()  # 等待进程完全结束
 
             retry_count -= 1
-            if retry_count == 0:
-                print(f"An error occurred while streaming {comment} {input_url}: {e}. All retry attempts failed.")
+            if retry_count == 0:  
+                current_time = datetime.now(china_tz).strftime('%Y-%m-%d %H:%M:%S')
+                print(f"[{current_time}] An error occurred while streaming {comment} {input_url}: {e}. All retry attempts failed.")
             else:
-                print(f"An error occurred while streaming {comment} {input_url}: {e}. Retrying... ({retry_count} attempts left)")
+                print(f"[{current_time}] An error occurred while streaming {comment} {input_url}: {e}. Retrying... ({retry_count} attempts left)")
                 time.sleep(1)  # 等待1秒后重试
 
 
@@ -122,7 +123,7 @@ def main(url):
         # 等待直到下一个整点
         next_hour = get_next_hour()
         time_to_wait = (next_hour - now).total_seconds()
-        print(f"Waiting until {next_hour.strftime('%H:%M:%S CST')} to update streams...", flush=True)
+        print(f"Waiting until {next_hour.strftime('%H:%M:%S CST')} to update txt...", flush=True)
         time.sleep(time_to_wait)
 
         # 停止当前的推流进程
