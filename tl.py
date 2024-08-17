@@ -47,8 +47,8 @@ def start_ffmpeg(input_url, output_url, comment, processes, retry_count=10):
                 process.wait()  # 等待进程完全结束
 
             retry_count -= 1
-            if retry_count == 0:  
-                current_time = datetime.now(china_tz).strftime('%Y-%m-%d %H:%M:%S')
+            current_time = datetime.now(china_tz).strftime('%Y-%m-%d %H:%M:%S')
+            if retry_count == 0:                
                 print(f"[{current_time}] An error occurred while streaming {comment} {input_url}: {e}. All retry attempts failed.")
             else:
                 print(f"[{current_time}] An error occurred while streaming {comment} {input_url}: {e}. Retrying... ({retry_count} attempts left)")
