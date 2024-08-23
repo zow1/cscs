@@ -9,7 +9,7 @@ import pytz
 china_tz = pytz.timezone('Asia/Shanghai')
 
 # 定义一个函数来启动FFmpeg进程
-def start_ffmpeg(input_url, output_url):
+def start_ffmpeg(input_url, output_url, comment, processes, retry_count=10):
     ffmpeg_command = [
         'ffmpeg',
         '-re',
