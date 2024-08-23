@@ -1,0 +1,49 @@
+name: tzhk
+
+on:
+  schedule:
+    #- cron: '30 19,22,1,4,7,10,13,16 * * *' # 每天的第3小时30分触发一次
+    - cron: '10 17 * * *'
+  workflow_dispatch:
+  #push:
+  #  branches:
+  #    - main
+
+# 在新工作流实例开始之前，自动取消任何正在运行的实例
+concurrency:
+  group: "tlhk-workflow" 
+  cancel-in-progress: true 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: pip install selenium requests futures eventlet pytz 
+
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Run itv_all
+        run: python ${{ github.workspace }}/tzhk.txt
+
+      - name: 提交更改
+        run: |
+          git config --local user.email "191049659@qq.com"
+          git config --local user.name "zow-zow"
+          #git add .
+          #git commit *.txt -m "Add generated file"
+          #git commit *.m3u -m "Add generated file"
+          #git pull --rebase
+          #git push -f
