@@ -15,6 +15,7 @@ def start_ffmpeg(input_url, output_url, comment, processes, retry_count=10):
         'ffmpeg',
         '-re',
         '-stream_loop', '-1',
+        '-user_agent', 'okhttp/4.12.0',  # 设置User-Agent
         '-i', input_url,
         '-bsf:a', 'aac_adtstoasc',
         '-vcodec', 'copy',
